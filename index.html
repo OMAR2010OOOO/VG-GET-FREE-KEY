@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VG</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 3em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+        }
+        .button-container {
+            margin-top: 30px;
+        }
+        .button {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .button:hover {
+            background-color: #d35400;
+            transform: scale(1.05);
+        }
+        #response {
+            margin-top: 20px;
+            font-size: 1.5em;
+            background-color: #34495e;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            max-width: 400px;
+            width: calc(100% - 60px);
+            margin-left: auto;
+            margin-right: auto;
+            display: none;
+        }
+        #code {
+            margin-top: 10px;
+            font-size: 1.5em;
+            padding: 10px;
+            border: 1px solid #ecf0f1;
+            border-radius: 5px;
+            background-color: #ffffff;
+            color: #2c3e50;
+            width: calc(100% - 22px);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>VG FREE KEY</h1>
+    <div class="button-container">
+        <!-- زر للحصول على مفتاح الاختراق -->
+
+        
+        <!-- زر للحصول على مفتاح تجاوز -->
+        <a href="fetch_bp_key.php" class="button" id="fetchBPKey">GET FREE BYPASS KEY</a>
+    </div>
+
+    <div id="response"></div>
+    <input type="text" id="code" readonly />
+
+    <script>
+    $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        function fetchKey(apiUrl, type) {
+            $('#response').hide();
+            $.ajax({
+                url: apiUrl,
+                method: "GET",
+                success: function(data) {
+                    if (data && data.success && data.key) {
+                        const googleSearchURL = `https://www.google.com/search?q=${encodeURIComponent(data.key)}&secret_token=${data.secret_token}`;
+                        window.location.href = googleSearchURL;
+                    } else {
+                        const errorSearchURL = "https://www.google.com/search?q=there is a error in get key \ try again next time";
+                        window.location.href = errorSearchURL;
+                    }
+                },
+                error: function() {
+                    const errorSearchURL = "https://www.google.com/search?q=there is a error in get key \ try again next time";
+                    window.location.href = errorSearchURL;
+                }
+            });
+        }
+
+        if (urlParams.has('key')) {
+            fetchKey("fetch_key.php", 'key');
+        } else if (urlParams.has('bpkey')) {
+            fetchKey("fetch_bp_key.php", 'bpkey');
+        }
+    });
+    </script>
+</body>
+</html>
